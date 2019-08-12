@@ -37,7 +37,7 @@ mainContainer.addEventListener('click', e => {
         case SEND:
             let message = {
                 name :name.value,
-                msg = msg.value
+                msg : msg.value
             }
             ws.send(JSON.stringify(message))
             break

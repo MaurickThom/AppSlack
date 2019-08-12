@@ -1,7 +1,7 @@
 const myData = [5, 12, 7, 1, 22]
-const updateData = (index, value) => {
+const updateData = (index, value) => (
     myData[index] += value
-}
+)
 
 const contextCanvas = document.getElementById("myChart").getContext('2d')
 const product = document.getElementById('product')
@@ -46,15 +46,15 @@ const myChart = new Chart(contextCanvas, {
     }
 })
 
-const ws = new WebSocket('ws://localhost:1323/ws')
+const ws = new WebSocket('ws://localhost:8080/ws')
 
-ws.onopen = () => {
-    console.log('Conectado')
-}
+ws.onopen = () => (
+    console.log('CONNECTED')
+)
 
-ws.onerror = e => {
-    console.log('error en la conexión', e)
-}
+ws.onerror = e => (
+    console.log('CONNECTION ERROR', e)
+)
 
 ws.onmessage = e => {
     console.log(e.data)

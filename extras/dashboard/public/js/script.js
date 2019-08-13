@@ -1,4 +1,4 @@
-const myData = [5, 12, 7, 1, 22]
+let myData = []
 const updateData = (index, value) => (
     myData[index] += value
 )
@@ -46,7 +46,7 @@ const myChart = new Chart(contextCanvas, {
     }
 })
 
-const ws = new WebSocket('ws://localhost:8080/ws')
+const ws = new WebSocket('ws://localhost:1700')
 
 ws.onopen = () => (
     console.log('CONNECTED')
@@ -58,9 +58,10 @@ ws.onerror = e => (
 
 ws.onmessage = e => {
     console.log(e.data)
-    const msg = JSON.parse(e.data)
-    updateData(msg.product, msg.quantity)
-    myChart.update()
+    // console.log(e.data)
+    // const msg = JSON.parse(e.data)
+    // updateData(msg.product, msg.quantity)
+    // myChart.update()
 }
 
 btnSend.addEventListener('click', e => {

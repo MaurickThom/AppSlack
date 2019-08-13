@@ -1,6 +1,7 @@
-let myData = []
-const updateData = (index, value) => (
-    myData[index] += value
+
+const myData = [5, 12, 7, 1, 22]
+const updateData = (index, arr) => (
+    myData[index] = arr[index]
 )
 
 const contextCanvas = document.getElementById("myChart").getContext('2d')
@@ -57,11 +58,12 @@ ws.onerror = e => (
 )
 
 ws.onmessage = e => {
-    console.log(e.data)
-    // console.log(e.data)
-    // const msg = JSON.parse(e.data)
-    // updateData(msg.product, msg.quantity)
-    // myChart.update()
+    const msg = JSON.parse(e.data)
+    
+    msg.forEach((element,index) => {
+      updateData(index,msg)  
+    })
+    myChart.update()
 }
 
 btnSend.addEventListener('click', e => {

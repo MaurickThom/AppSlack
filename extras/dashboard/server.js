@@ -7,8 +7,12 @@ const {
     morgan = require('morgan'),
     cors = require('cors'),
     app = express(),
-    WebSocketServer = require('ws').Server,
-    myData = [5, 12, 7, 1, 22]
+    WebSocketServer = require('ws').Server
+const myData = [5, 12, 7, 1, 22]
+const updateData = (index, value) => (
+    myData[index] += value
+)
+
 
 app.use(cors())
 app.use(morgan('dev'))
@@ -27,7 +31,11 @@ const wsServer = new WebSocketServer({
 })
 wsServer.on('connection', function (ws) {
     ws.on('message', function (message) {
-        ws.send(myData)
+        let msg = JSON.parse(message)
+        
+        updateData(msg.product, msg.quantity)
+
+        ws.send(JSON.stringify(myData))
     })
 
 })

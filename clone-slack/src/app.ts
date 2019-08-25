@@ -1,5 +1,5 @@
-import express,{Application,urlencoded,json} from 'express'
 import connectMongo,{MongoStoreFactory} from 'connect-mongo'
+import express,{Application,urlencoded,json} from 'express'
 import {createServer,Server} from 'http'
 import session from 'express-session'
 import passport from 'passport'
@@ -13,13 +13,15 @@ export class App {
     private MongoStore:MongoStoreFactory
     private app:Application
     private server:Server
+    private io:socket.Server
     constructor(private port?:number){
         this.app = express()
         this.server = createServer(this.app)
+        this.io = socket(this.server)
         this.MongoStore = connectMongo(session)
-        
         this.settings()
         this.middlewares()
+        this.sockets()
         this.routes()
     }
     private settings():void{
@@ -44,8 +46,20 @@ export class App {
         this.app.use(passport.initialize())
         this.app.use(passport.session())
     }
+    private sockets(): void {
+        this.io.on('connection',client=>{
+            console.log('CONNECTED ',client.handshake.address)
+            client.on('disconnect',()=>{
+                console.log('DISCONNECTED ',client.handshake.address)
+            })
+        })
+    }
     private routes():void{
-
+        // this.app.get('/',(req,res)=>{
+        //     res.json({
+        //         ok:true
+        //     })
+        // })
     }
     public async listen():Promise<void>{
         await this.server.listen(this.app.get('port'))

@@ -1,5 +1,8 @@
 # **AppSlack**
+
 clone of the slack with Nodejs , SPA vanilla js
+
+![slack](img/slack.png)
 
 ## **References**
 

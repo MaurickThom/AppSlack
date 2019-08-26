@@ -1,5 +1,6 @@
 import connectMongo,{MongoStoreFactory} from 'connect-mongo'
 import express,{Application,urlencoded,json} from 'express'
+import {createMessage} from './util/createMessage'
 import {createServer,Server} from 'http'
 import session from 'express-session'
 import passport from 'passport'
@@ -8,6 +9,8 @@ import morgan from 'morgan'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import './lib/passport'
+import UserRouter from './routes/user.routes'
+
 
 export class App {
     private MongoStore:MongoStoreFactory
@@ -33,7 +36,7 @@ export class App {
         this.app.use(morgan('dev'))
         this.app.use(json())
         this.app.use(urlencoded({extended:true}))
-        this.app.use(express.static(`${__dirname}/public`))
+        // this.app.use(express.static(`${__dirname}/public`))
         this.app.use(session({
             secret:'SECRET',
             resave:true,
@@ -55,11 +58,7 @@ export class App {
         })
     }
     private routes():void{
-        // this.app.get('/',(req,res)=>{
-        //     res.json({
-        //         ok:true
-        //     })
-        // })
+        this.app.use(UserRouter)
     }
     public async listen():Promise<void>{
         await this.server.listen(this.app.get('port'))

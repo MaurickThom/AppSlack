@@ -10,6 +10,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import './lib/passport'
 import UserRouter from './routes/user.routes'
+import { Request, Response, NextFunction } from 'express';
 
 
 export class App {
@@ -36,7 +37,7 @@ export class App {
         this.app.use(morgan('dev'))
         this.app.use(json())
         this.app.use(urlencoded({extended:true}))
-        // this.app.use(express.static(`${__dirname}/public`))
+        this.app.use(express.static(`${__dirname}/public`))
         this.app.use(session({
             secret:'SECRET',
             resave:true,
@@ -48,6 +49,9 @@ export class App {
         }))
         this.app.use(passport.initialize())
         this.app.use(passport.session())
+        this.app.use((req:Request,res:Response,next:NextFunction)=>{
+            res.redirect('/')
+        })
     }
     private sockets(): void {
         this.io.on('connection',client=>{

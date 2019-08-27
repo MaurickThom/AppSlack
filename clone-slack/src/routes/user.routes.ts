@@ -4,10 +4,10 @@ import { login, register } from '../controllers/user.controller';
 const router = Router()
 
 router.get('/',(req:any,res)=>{
-    res.json({
-        message:'nada'
-    })
+    res.render('index.html')
 })
+
+
 router.post('/login',isNotLoggedIn,login)
 router.post('/register',isNotLoggedIn,register)
 router.get('/logout',isLoggedIn,(req,res)=>{

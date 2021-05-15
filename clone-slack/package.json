@@ -36,7 +36,7 @@
     "@types/express-session": "^1.15.14",
     "@types/hapi": "^18.0.2",
     "@types/mongoose": "^5.5.13",
-    "@types/morgan": "^1.7.37",
+    "@types/morgan": "1.9.2",
     "@types/passport": "^1.0.0",
     "@types/passport-local": "^1.0.33",
     "@types/socket.io": "^2.1.2",
